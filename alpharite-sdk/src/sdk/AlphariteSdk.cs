@@ -1,4 +1,4 @@
-﻿namespace AlphaRite.Sdk {
+﻿namespace AlphaRite.sdk {
     public class AlphariteSdk {
         public void onStart() {
             

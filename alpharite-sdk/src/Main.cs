@@ -1,4 +1,4 @@
-﻿using AlphaRite.Sdk;
+﻿using AlphaRite.sdk;
 using UnityEngine;
 
 namespace AlphaRite
@@ -12,22 +12,22 @@ namespace AlphaRite
      */
     public class Main: MonoBehaviour {
         private static GameObject _alphaRiteInstance;
-        private AlphariteSdk sdk;
+        private AlphariteSdk _sdk;
 
         public void Start() {
-            this.sdk = new AlphariteSdk();
+            _sdk = new AlphariteSdk();
         }
 
         public void Update() {
-            this.sdk.onUpdate();
+            _sdk.onUpdate();
         }
 
         public void OnGUI() {
-            this.sdk.onRenderingUpdate();
+            _sdk.onRenderingUpdate();
         }
 
         public void OnDisable() {
-            this.sdk.onStop();
+            _sdk.onStop();
         }
 
         public static void main() {
