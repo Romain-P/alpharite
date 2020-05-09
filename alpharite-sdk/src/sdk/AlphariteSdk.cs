@@ -1,19 +1,45 @@
-﻿namespace AlphaRite.sdk {
-    public class AlphariteSdk {
-        public void onStart() {
+﻿using System.Collections.Generic;
+using AlphaRite.sdk.hacks;
+
+namespace AlphaRite.sdk {
+    public class AlphariteSdk : AlphaCycle {
+        private List<AlphaCycle> _cycles;
+        public ReferenceHolder references { get; }
+        
+        public AlphariteSdk() : base(null) {
+            _cycles = new List<AlphaCycle>();
+            references = new ReferenceHolder();
             
+            subscribeHacks();
+            subscribeScripts();
         }
 
-        public void onStop() {
-            
+        void subscribeHacks() {
+            _cycles.Add(new WallHack(this));
         }
 
-        public void onRenderingUpdate() {
-            
+        void subscribeScripts() {
+            // TODO
         }
 
-        public void onUpdate() {
-            
+        protected override void onStart() {
+            foreach (var cycle in _cycles)
+                cycle.enable();
+        }
+
+        protected override void onStop() {
+            foreach (var cycle in _cycles)
+                cycle.disable();
+        }
+
+        protected override void onRenderingUpdate() {
+            foreach (var cycle in _cycles)
+                cycle.renderingUpdate();
+        }
+
+        protected override void onUpdate() {
+            foreach (var cycle in _cycles)
+                cycle.update();
         }
     }
 }

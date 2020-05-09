@@ -124,6 +124,9 @@
     <Compile Include="src\Loader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\ScriptAdapter.cs" />
+    <Compile Include="src\sdk\hacks\WallHack.cs" />
+    <Compile Include="src\sdk\ReferenceHolder.cs" />
+    <Compile Include="src\sdk\shared\AlphaCycle.cs" />
     <EmbeddedResource Include="Properties\AlphaRite.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +138,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MergedShared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\MergedShared.dll</HintPath>
+    </Reference>
     <Reference Include="MergedUnity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\releases\MergedUnity.dll</HintPath>
     </Reference>

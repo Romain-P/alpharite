@@ -7,19 +7,19 @@ namespace AlphaRite {
         
         public void Start() {
             _sdk = new AlphariteSdk();
-            _sdk.onStart();
+            _sdk.enable();
         }
 
         public void Update() {
-            _sdk.onUpdate();
+            _sdk.update();
         }
 
         public void OnGUI() {
-            _sdk.onRenderingUpdate();
+            _sdk.renderingUpdate();
         }
 
         public void OnDisable() {
-            _sdk.onStop();
+            _sdk.disable();
         }
     }
 }
