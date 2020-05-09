@@ -1,12 +1,16 @@
-﻿using AlphaRite.sdk;
-using UnityEngine;
+﻿﻿using UnityEngine;
 
 namespace AlphaRite {
-    public class ScriptAdapter: MonoBehaviour{
+    using sdk;
+    
+    public class AlphaScriptAdapter: MonoBehaviour{
         private AlphariteSdk _sdk;
+
+        public AlphaScriptAdapter() {
+            _sdk = new AlphariteSdk();
+        }
         
         public void Start() {
-            _sdk = new AlphariteSdk();
             _sdk.enable();
         }
 

@@ -1,4 +1,4 @@
-﻿namespace AlphaRite.sdk {
+﻿﻿namespace AlphaRite.sdk {
     public abstract class AlphaCycle {
         private bool _enabled;
         protected AlphariteSdk sdk;
