@@ -1,6 +1,6 @@
 ### AlphaRite
 
-Alpharite is an experimental project in order
+Alpharite is an experimental project in order to
 * Explore Unity injection methods
 * Learn how to internally alterate a game
 
