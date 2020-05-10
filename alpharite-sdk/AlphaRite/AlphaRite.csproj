@@ -64,6 +64,7 @@
         <Compile Include="src\sdk\ReferenceHolder.cs" />
         <Compile Include="src\sdk\shared\AlphaCycle.cs" />
         <Compile Include="src\sdk\shared\Hook.cs" />
+        <Compile Include="src\sdk\shared\Reflection.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

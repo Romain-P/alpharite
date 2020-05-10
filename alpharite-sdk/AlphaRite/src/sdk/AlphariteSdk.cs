@@ -5,14 +5,14 @@ using AlphaRite.sdk.hacks;
  namespace AlphaRite.sdk {
     public class AlphariteSdk {
         private List<AlphaCycle> _cycles;
-        public ReferenceHolder references { get; }
+        public ReferenceHolder refs { get; }
         public Harmony patcher { get; }
         
         public AlphariteSdk() {
             patcher = new Harmony("AlphaRite.sdk");
             
             _cycles = new List<AlphaCycle>();
-            references = new ReferenceHolder();
+            refs = new ReferenceHolder();
             
             subscribeHacks();
             subscribeScripts();

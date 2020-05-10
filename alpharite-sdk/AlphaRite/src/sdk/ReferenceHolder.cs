@@ -1,5 +1,8 @@
-﻿using MergedUnity.Glues;
+﻿using Gameplay;
+using MergedUnity.Glues;
 using MergedUnity.Glues.GUI;
+using ns10;
+using RemoteClient;
 using StunShared.GlueSystem;
 
 namespace AlphaRite.sdk {
@@ -7,8 +10,21 @@ namespace AlphaRite.sdk {
         
         public ReferenceHolder() {}
 
-        public T get<T>(LoadingState minimumLoadingState = LoadingState.Ready) where T: InstancingGlue<T> {
+        public K glueInstance<T, K>(LoadingState minimumLoadingState = LoadingState.Ready) where T: InstancingGlue<K> {
             return GUIGlobals.Glue.Get<T>(minimumLoadingState).Instance;
+        }
+
+        public GameClient gameClient {
+            get {
+                var gameClientProxy = glueInstance<GameClientGlue, IGameClient>();
+
+                var gameClient = Reflection.proxy<Class3157, GameClient>(gameClientProxy)
+                    .deep<Class3159>("igameClient_0")
+                    .deep<GameClient>("gameClient_0")
+                    .resolve();
+
+                return gameClient;
+            }
         }
     }
 }
