@@ -20,8 +20,7 @@ namespace AlphaRite.sdk {
 
                 var gameClient = Reflection.proxy<Class3157, GameClient>(gameClientProxy)
                     .deep<Class3159>("igameClient_0")
-                    .deep<GameClient>("gameClient_0")
-                    .resolve();
+                    .deepAndResolve("gameClient_0");
 
                 return gameClient;
             }

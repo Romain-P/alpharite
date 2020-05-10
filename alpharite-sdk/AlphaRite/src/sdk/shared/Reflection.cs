@@ -27,6 +27,11 @@ namespace AlphaRite.sdk {
                 return this;
             }
 
+            public TTo deepAndResolve(string resolvedFieldName) {
+                deep<TTo>(resolvedFieldName);
+                return resolve();
+            }
+
             public TTo resolve() {
                 return _instance as TTo;
             }
