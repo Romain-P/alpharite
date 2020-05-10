@@ -4,7 +4,7 @@
  namespace AlphaRite.sdk.hacks {
     public class WallHack: AlphaCycle {
         public WallHack(AlphariteSdk sdk) : base(sdk) {
-            registerPropertyGet<GameClient, WallHack>("wallhack", "FogOfWarEnabled", "WallhackHook");
+            hookGetProperty<GameClient, WallHack>("wallhack", "FogOfWarEnabled", "WallhackHook");
         }
 
         protected override void onStart() {

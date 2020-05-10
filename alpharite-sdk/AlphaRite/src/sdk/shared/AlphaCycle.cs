@@ -27,21 +27,21 @@
             patcher.Unpatch(hook.originalMethod, hook.hookMethod.method);
         }
 
-        protected void registerMethod<O, H>(string alias, string originalMethod, string hookMethod) {
-            var detour = new Hook(typeof(O).GetMethod(originalMethod), 
-                new HarmonyMethod(typeof(H).GetMethod(hookMethod)));
+        protected void hookMethod<TO, TH>(string alias, string originalMethod, string hookMethod) {
+            var detour = new Hook(typeof(TO).GetMethod(originalMethod), 
+                new HarmonyMethod(typeof(TH).GetMethod(hookMethod)));
             
             methods[alias] = detour;
         }
         
-        protected void registerPropertyGet<TO, TH>(string alias, string original, string hook) {
+        protected void hookGetProperty<TO, TH>(string alias, string original, string hook) {
             var detour = new Hook(typeof(TO).GetProperty(original)?.GetGetMethod(), 
                 new HarmonyMethod(typeof(TH).GetMethod(hook)));
             
             methods[alias] = detour;
         }
         
-        protected void registerPropertySet<TO, TH>(string alias, string original, string hook) {
+        protected void hookSetProperty<TO, TH>(string alias, string original, string hook) {
             var detour = new Hook(typeof(TO).GetProperty(original)?.GetSetMethod(), 
                 new HarmonyMethod(typeof(TH).GetMethod(hook)));
             
