@@ -1,12 +1,16 @@
 ﻿﻿using System.Collections.Generic;
 using AlphaRite.sdk.hacks;
+ using HarmonyLib;
 
-namespace AlphaRite.sdk {
-    public class AlphariteSdk : AlphaCycle {
+ namespace AlphaRite.sdk {
+    public class AlphariteSdk {
         private List<AlphaCycle> _cycles;
         public ReferenceHolder references { get; }
+        public Harmony patcher { get; }
         
-        public AlphariteSdk() : base(null) {
+        public AlphariteSdk() {
+            patcher = new Harmony("AlphaRite.sdk");
+            
             _cycles = new List<AlphaCycle>();
             references = new ReferenceHolder();
             
@@ -22,22 +26,22 @@ namespace AlphaRite.sdk {
             // TODO
         }
 
-        protected override void onStart() {
+        public void onStart() {
             foreach (var cycle in _cycles)
                 cycle.enable();
         }
 
-        protected override void onStop() {
+        public void onStop() {
             foreach (var cycle in _cycles)
                 cycle.disable();
         }
 
-        protected override void onRenderingUpdate() {
+        public void onRenderingUpdate() {
             foreach (var cycle in _cycles)
                 cycle.renderingUpdate();
         }
 
-        protected override void onUpdate() {
+        public void onUpdate() {
             foreach (var cycle in _cycles)
                 cycle.update();
         }

@@ -11,19 +11,19 @@ namespace AlphaRite {
         }
         
         public void Start() {
-            _sdk.enable();
+            _sdk.onStart();
         }
 
         public void Update() {
-            _sdk.update();
+            _sdk.onUpdate();
         }
 
         public void OnGUI() {
-            _sdk.renderingUpdate();
+            _sdk.onRenderingUpdate();
         }
 
         public void OnDisable() {
-            _sdk.disable();
+            _sdk.onStop();
         }
     }
 }
