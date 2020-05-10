@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
+using UnityEngine;
 
 // --------------------------------------------------
 // UnityInjector - ConsoleWindow.cs
@@ -12,6 +13,7 @@ using System.Text;
 // ----------------
 namespace AlphaRite {
     internal class Alpharite {
+
         public static void println(string msg, params object[] args) {
             if (!ConsoleWindow.IsAttached) {
                 ConsoleWindow.Attach();
