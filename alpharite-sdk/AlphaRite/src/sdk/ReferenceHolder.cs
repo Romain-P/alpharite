@@ -1,15 +1,14 @@
-﻿﻿using HarmonyLib;
- using MergedUnity.Glues;
+﻿using MergedUnity.Glues;
 using MergedUnity.Glues.GUI;
+using StunShared.GlueSystem;
 
 namespace AlphaRite.sdk {
     public class ReferenceHolder {
-        public GameClientGlue gameClient { get; }
-        public DataTableSystemGlue datatableSystem { get; }
         
-        public ReferenceHolder() {
-            gameClient = GUIGlobals.Glue.Get<GameClientGlue>();
-            datatableSystem = GUIGlobals.Glue.Get<DataTableSystemGlue>();
+        public ReferenceHolder() {}
+
+        public T get<T>(LoadingState minimumLoadingState = LoadingState.Ready) where T: InstancingGlue<T> {
+            return GUIGlobals.Glue.Get<T>(minimumLoadingState).Instance;
         }
     }
 }
