@@ -10,4 +10,4 @@ Might be used as `SDK` for your projects or as a ready-to-use patched module (e.
 
 Latest patched module is at the root of this folder.  
 MergedUnity.dll have been patched for loading our customer AlphaRite.dll once the game started.  
-For using AlphaRite, move both modules (MergedUnity & AlphaRite) inside `_Data/Managed` directory
+For using AlphaRite, move the 3 modules (MergedUnity, AlphaRite, Harmony) inside `_Data/Managed` directory
