@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using StunShared;
+using UnityEngine;
 
 namespace AlphaRite
 {
@@ -6,6 +8,7 @@ namespace AlphaRite
         private static GameObject _alphaRiteInstance;
         
         public static void init() {
+            Alpharite.println("Initializing injection");
             _alphaRiteInstance = new GameObject();
                 
             _alphaRiteInstance.transform.parent = null;
@@ -15,10 +18,13 @@ namespace AlphaRite
 
             _alphaRiteInstance.AddComponent<AlphaScriptAdapter>();
             GameObject.DontDestroyOnLoad(_alphaRiteInstance);
+            Alpharite.println("Injection success");
         }
 
         public static void stop() {
+            Alpharite.println("Stopping Alpharite");
             GameObject.Destroy(_alphaRiteInstance);
+            Alpharite.println("Alpharite stopped");
         }
     }
 }
