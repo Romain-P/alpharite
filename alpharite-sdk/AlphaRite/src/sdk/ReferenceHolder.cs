@@ -18,11 +18,9 @@ namespace AlphaRite.sdk {
             get {
                 var gameClientProxy = glueInstance<GameClientGlue, IGameClient>();
 
-                var gameClient = Reflection.proxy<Class3157, GameClient>(gameClientProxy)
+                return Reflection.proxy<Class3157, GameClient>(gameClientProxy)
                     .deep<Class3159>("igameClient_0")
                     .deepAndResolve("gameClient_0");
-
-                return gameClient;
             }
         }
     }
