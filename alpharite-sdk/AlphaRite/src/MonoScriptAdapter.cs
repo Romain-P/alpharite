@@ -3,10 +3,10 @@
 namespace AlphaRite {
     using sdk;
     
-    public class AlphaScriptAdapter: MonoBehaviour{
+    public class MonoScriptAdapter: MonoBehaviour{
         private AlphariteSdk _sdk;
 
-        public AlphaScriptAdapter() {
+        public MonoScriptAdapter() {
             _sdk = new AlphariteSdk();
         }
         

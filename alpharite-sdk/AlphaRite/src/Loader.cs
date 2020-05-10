@@ -16,7 +16,7 @@ namespace AlphaRite
             if (gameRootObject != null && gameRootObject.gameObject != _alphaRiteInstance)
                 gameRootObject.parent = _alphaRiteInstance.transform;
 
-            _alphaRiteInstance.AddComponent<AlphaScriptAdapter>();
+            _alphaRiteInstance.AddComponent<MonoScriptAdapter>();
             GameObject.DontDestroyOnLoad(_alphaRiteInstance);
             Alpharite.println("Injection success");
         }

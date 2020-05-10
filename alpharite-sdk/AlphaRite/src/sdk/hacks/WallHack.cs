@@ -1,10 +1,4 @@
-﻿﻿using System.Threading;
-using Gameplay;
-using Gameplay.GameObjects;
- using HarmonyLib;
- using MergedUnity.Glues;
-using MergedUnity.Glues.GUI;
-using StunShared.GlueSystem;
+﻿ using Gameplay;
  using UnityEngine;
 
  namespace AlphaRite.sdk.hacks {
@@ -15,12 +9,12 @@ using StunShared.GlueSystem;
 
         protected override void onStart() {
             enableHook("wallhack");
-            Debug.LogError("Applied Hook");
+            Alpharite.println("Applied Hook");
         }
 
         protected override void onStop() {
             disableHook("wallhack");
-            Debug.LogError("Removed Hook");
+            Alpharite.println("Removed Hook");
         }
 
         public static bool WallhackHook(ref bool __result) {

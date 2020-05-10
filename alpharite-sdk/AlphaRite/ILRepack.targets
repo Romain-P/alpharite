@@ -12,7 +12,6 @@
                 Parallel="true"
                 Internalize="false"
                 DebugInfo="false"
-                LibraryPath="C:\Users\James\Documents\Visual Studio 2017\Projects\DevConsoleLoader\Libs"
                 InputAssemblies="@(InputAssemblies)"
                 TargetKind="Dll"
                 TargetPlatformVersion="v2"
