@@ -13,7 +13,7 @@
                 Internalize="false"
                 DebugInfo="false"
                 InputAssemblies="@(InputAssemblies)"
-                LibraryPath="C:\Users\Raphael Goulmot\Desktop\alpharite\lib"
+                LibraryPath="..\..\lib"
                 TargetKind="Dll"
                 TargetPlatformVersion="v2"
                 OutputFile="$(OutputPath)\$(AssemblyName).dll"
