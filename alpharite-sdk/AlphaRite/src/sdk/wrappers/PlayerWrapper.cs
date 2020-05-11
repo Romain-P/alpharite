@@ -18,15 +18,11 @@ namespace AlphaRite.sdk.wrappers {
 
             public List<Data_PlayerInfo> enemies => unwrapped.getFieldValue<List<Data_PlayerInfo>>("_EnemyTeamData");
             public List<Data_PlayerInfo> allies => unwrapped.getFieldValue<List<Data_PlayerInfo>>("_LocalTeamData");
-
-            public Vector2 playerPosition => BloodgateEffects.Instance.GetLocalPlayer().position();
             public Data_PlayerInfo player {
                 get {
                     //player only present in Arena mode
                     Data_PlayerInfo infos = allies.Find(x => x.LocalPlayer);
                     
-                    
-
                     //find player manually if not in cache (e.g happens in Playground mode)
                     if (infos.ID.Index == 0) {
                         var states = refs.viewState.HudStates.method_1("PartyBarCharacter");

@@ -57,7 +57,7 @@ using AlphaRite.sdk.hacks;
 
         public void onRenderingUpdate() {
             foreach (var cycle in _cycles.Values)
-                cycle.update();
+                cycle.renderingUpdate();
         }
 
         public void onUpdate() {
