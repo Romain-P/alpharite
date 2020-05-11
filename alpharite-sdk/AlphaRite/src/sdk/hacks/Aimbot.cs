@@ -21,7 +21,7 @@ namespace AlphaRite.sdk.hacks {
             for (var i = 0; i < sdk.refs.viewState.ActiveObjects.Count; i++) {
                 var type = sdk.refs.viewState.ActiveObjects.Values[i].TypeId;
                 
-                Alpharite.println(sdk.refs.data.GetTypeName(type));
+                //Alpharite.println(sdk.refs.data.GetTypeName(type));
             }
 
             //Alpharite.println("position: {0}", sdk.refs.players.playerPosition);
