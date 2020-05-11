@@ -1,7 +1,7 @@
 ﻿﻿using System;
  using System.Collections.Generic;
 using AlphaRite.sdk.hacks;
- using AlphaRite.sdk.scripts.gui;
+ using AlphaRite.sdk.hacks.gui;
  using HarmonyLib;
  using MergedUnity.Glues;
  using MergedUnity.Glues.GUI;
@@ -38,10 +38,10 @@ using AlphaRite.sdk.hacks;
         void subscribeHacks() {
             _cycles["wallhack"] = new WallHack(this);
             _cycles["aimbot"] = new Aimbot(this);
+            _cycles["gui"] = new Gui(this);
         }
 
         void subscribeScripts() {
-            _cycles["gui"] = new GuiScript(this);
             // TODO
         }
 

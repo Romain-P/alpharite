@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
+using AlphaRite.sdk.hacks.gui;
 using UnityEngine;
 
 // --------------------------------------------------
@@ -23,6 +24,7 @@ namespace AlphaRite {
             ConsoleWindow.StandardOut.WriteLine("[INFO]:\t"+msg, args);
             ConsoleWindow.StandardOut.Flush();
             Debug.LogError(string.Format(msg, args));
+            Gui.AddMsg(string.Format(msg, args));
         }
     }
 
