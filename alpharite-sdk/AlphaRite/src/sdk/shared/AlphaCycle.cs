@@ -31,22 +31,22 @@
         }
 
         protected void hookMethod<TO, TH>(string alias, string originalMethod, string hookMethod, Hook.HookMode mode = Hook.HookMode.PREFIX) {
-            var detour = new Hook(typeof(TO).GetMethod(originalMethod), 
-                new HarmonyMethod(typeof(TH).GetMethod(hookMethod)), mode);
+            var detour = new Hook(typeof(TO).getMethod(originalMethod), 
+                new HarmonyMethod(typeof(TH).getMethod(hookMethod)), mode);
             
             methods[alias] = detour;
         }
         
         protected void hookGetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
-            var detour = new Hook(typeof(TO).GetProperty(original)?.GetGetMethod(), 
-                new HarmonyMethod(typeof(TH).GetMethod(hook)), mode);
+            var detour = new Hook(typeof(TO).GetProperty(original).GetGetMethod(), 
+                new HarmonyMethod(typeof(TH).getMethod(hook)), mode);
             
             methods[alias] = detour;
         }
         
         protected void hookSetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
-            var detour = new Hook(typeof(TO).GetProperty(original)?.GetSetMethod(), 
-                new HarmonyMethod(typeof(TH).GetMethod(hook)), mode);
+            var detour = new Hook(typeof(TO).getProperty(original).GetSetMethod(), 
+                new HarmonyMethod(typeof(TH).getMethod(hook)), mode);
             
             methods[alias] = detour;
         }

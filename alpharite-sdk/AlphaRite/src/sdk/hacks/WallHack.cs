@@ -1,4 +1,6 @@
-﻿ using Gameplay;
+﻿ using BloodGUI;
+ using BloodGUI_Binding.HUD;
+ using Gameplay;
  using UnityEngine;
 
  namespace AlphaRite.sdk.hacks {
@@ -9,12 +11,10 @@
 
         protected override void onStart() {
             enableHook("wallhack");
-            Alpharite.println("Applied Hook");
         }
 
         protected override void onStop() {
             disableHook("wallhack");
-            Alpharite.println("Removed Hook");
         }
 
         public static bool WallhackHook(ref bool __result) {

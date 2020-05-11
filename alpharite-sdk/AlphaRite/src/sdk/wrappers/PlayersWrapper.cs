@@ -33,7 +33,8 @@ namespace AlphaRite.sdk.wrappers {
                             var id = (GameObjectId) table.Get("ID");
 
                             infos.ID = new UIGameObjectId(id.Index, id.Generation);
-                            infos.LocalPlayer = table.Get("IsLocalPlayer");
+                            infos.LocalPlayer = true;//table.Get("IsLocalPlayer");
+                            break;
                         }
                     }
 

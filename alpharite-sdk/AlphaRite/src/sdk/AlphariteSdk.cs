@@ -1,4 +1,5 @@
-﻿﻿using System.Collections.Generic;
+﻿﻿using System;
+ using System.Collections.Generic;
 using AlphaRite.sdk.hacks;
  using HarmonyLib;
  using MergedUnity.Glues;
@@ -7,23 +8,35 @@ using AlphaRite.sdk.hacks;
 
  namespace AlphaRite.sdk {
     public class AlphariteSdk {
-        private List<AlphaCycle> _cycles;
+        private Dictionary<string, AlphaCycle> _cycles;
         public ReferenceHolder refs { get; }
         public Harmony patcher { get; }
         
         public AlphariteSdk() {
             patcher = new Harmony("AlphaRite.sdk");
             
-            _cycles = new List<AlphaCycle>();
+            _cycles = new Dictionary<string, AlphaCycle>();
             refs = new ReferenceHolder();
             
             subscribeHacks();
             subscribeScripts();
         }
 
+        public void enableCycle(string cycleAlias) {
+            var cycle = _cycles[cycleAlias] ?? throw new Exception("Cycle {0} does not exist".format(cycleAlias));
+            cycle.enable();
+            Alpharite.println("Enabled {0} successfully", cycleAlias);
+        }
+        
+        public void disableCycle(string cycleAlias) {
+            var cycle = _cycles[cycleAlias] ?? throw new Exception("Cycle {0} does not exist".format(cycleAlias));
+            cycle.disable();
+            Alpharite.println("Disabled {0} successfully", cycleAlias);
+        }
+
         void subscribeHacks() {
-            _cycles.Add(new WallHack(this));
-            _cycles.Add(new Aimbot(this));
+            _cycles["wallhack"] = new WallHack(this);
+            _cycles["aimbot"] = new Aimbot(this);
         }
 
         void subscribeScripts() {
@@ -33,22 +46,22 @@ using AlphaRite.sdk.hacks;
         public void onStart() {
             enableDebugTools();
             
-            foreach (var cycle in _cycles)
+            foreach (var cycle in _cycles.Values)
                 cycle.enable();
         }
 
         public void onStop() {
-            foreach (var cycle in _cycles)
-                cycle.disable();
+            foreach (var cycle in _cycles.Keys)
+                enableCycle(cycle);
         }
 
         public void onRenderingUpdate() {
-            foreach (var cycle in _cycles)
-                cycle.renderingUpdate();
+            foreach (var cycle in _cycles.Keys)
+                disableCycle(cycle);
         }
 
         public void onUpdate() {
-            foreach (var cycle in _cycles)
+            foreach (var cycle in _cycles.Values)
                 cycle.update();
         }
 
