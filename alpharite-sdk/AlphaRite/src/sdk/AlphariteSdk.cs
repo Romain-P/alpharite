@@ -46,18 +46,18 @@ using AlphaRite.sdk.hacks;
         public void onStart() {
             enableDebugTools();
             
-            foreach (var cycle in _cycles.Values)
-                cycle.enable();
+            foreach (var cycle in _cycles.Keys)
+               enableCycle(cycle);
         }
 
         public void onStop() {
             foreach (var cycle in _cycles.Keys)
-                enableCycle(cycle);
+                disableCycle(cycle);
         }
 
         public void onRenderingUpdate() {
-            foreach (var cycle in _cycles.Keys)
-                disableCycle(cycle);
+            foreach (var cycle in _cycles.Values)
+                cycle.update();
         }
 
         public void onUpdate() {

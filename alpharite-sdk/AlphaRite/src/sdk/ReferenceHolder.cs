@@ -6,6 +6,7 @@ using BloodGUI;
 using BloodGUI_Binding.Base;
 using BloodGUI_Binding.HUD;
 using Gameplay;
+using Gameplay.DataIO;
 using Gameplay.GameObjects;
 using Gameplay.View;
 using MathCore;
@@ -35,7 +36,9 @@ namespace AlphaRite.sdk {
         public ViewState viewState => clientInterface.GetViewState();
         
         public UI_HUDBase hud => glueInstance<HUDBaseGlue, UI_HUDBase>();
+        
+        public IGameplayData data => glueInstance<GameplayDataGlue, IGameplayData>();
 
-        public PlayersWrapper.References players => new PlayersWrapper.References();
+        public PlayerWrapper.References players => new PlayerWrapper.References();
     }
 }

@@ -18,7 +18,8 @@ namespace AlphaRite.sdk.hacks {
 
         protected override void onUpdate() {
             //if (!sdk.refs.client.IsConnected) return;
-            //Alpharite.println("position: {0}", sdk.refs.players.player.position());
+            
+            //Alpharite.println("position: {0}", sdk.refs.players.playerPosition);
         }
 
         protected override void onStop() {
