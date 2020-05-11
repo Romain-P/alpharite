@@ -62,6 +62,8 @@
         <Compile Include="src\sdk\hacks\Aimbot.cs" />
         <Compile Include="src\sdk\hacks\WallHack.cs" />
         <Compile Include="src\sdk\ReferenceHolder.cs" />
+        <Compile Include="src\sdk\scripts\gui\DragableUI.cs" />
+        <Compile Include="src\sdk\scripts\gui\GuiScript.cs" />
         <Compile Include="src\sdk\shared\AlphaCycle.cs" />
         <Compile Include="src\sdk\shared\Hook.cs" />
         <Compile Include="src\sdk\shared\Reflection.cs" />

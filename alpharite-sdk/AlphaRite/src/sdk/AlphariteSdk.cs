@@ -1,6 +1,7 @@
 ﻿﻿using System;
  using System.Collections.Generic;
 using AlphaRite.sdk.hacks;
+ using AlphaRite.sdk.scripts.gui;
  using HarmonyLib;
  using MergedUnity.Glues;
  using MergedUnity.Glues.GUI;
@@ -40,6 +41,7 @@ using AlphaRite.sdk.hacks;
         }
 
         void subscribeScripts() {
+            _cycles["gui"] = new GuiScript(this);
             // TODO
         }
 

@@ -30,5 +30,7 @@ namespace AlphaRite
             GameObject.Destroy(_alphaRiteInstance);
             Alpharite.println("Alpharite stopped");
         }
+
+        public static GameObject AlphaRiteInstance => _alphaRiteInstance;
     }
 }
