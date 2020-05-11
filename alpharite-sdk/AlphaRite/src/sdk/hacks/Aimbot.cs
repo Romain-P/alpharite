@@ -1,4 +1,5 @@
 ﻿using System;
+using AlphaRite.sdk.wrappers;
 using BloodGUI_Binding.Base;
 using Gameplay;
 using GeneralVR;
@@ -13,7 +14,11 @@ namespace AlphaRite.sdk.hacks {
         public Aimbot(AlphariteSdk sdk): base(sdk) {}
 
         protected override void onStart() {
+        }
 
+        protected override void onUpdate() {
+            //if (!sdk.refs.client.IsConnected) return;
+            //Alpharite.println("position: {0}", sdk.refs.players.player.position());
         }
 
         protected override void onStop() {

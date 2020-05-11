@@ -1,27 +1,41 @@
-﻿using Gameplay;
+﻿using System;
+using System.Collections.Generic;
+using AlphaRite.sdk.wrappers;
+using Avro;
+using BloodGUI;
+using BloodGUI_Binding.Base;
+using BloodGUI_Binding.HUD;
+using Gameplay;
+using Gameplay.GameObjects;
+using Gameplay.View;
+using MathCore;
 using MergedUnity.Glues;
 using MergedUnity.Glues.GUI;
-using ns10;
+using ns18;
 using RemoteClient;
 using StunShared.GlueSystem;
+using UnityShared;
 
 namespace AlphaRite.sdk {
     public class ReferenceHolder {
-        
-        public ReferenceHolder() {}
+        public static ReferenceHolder instance;
+
+        public ReferenceHolder() {
+            instance = this;
+        }
 
         public K glueInstance<T, K>(LoadingState minimumLoadingState = LoadingState.Ready) where T: InstancingGlue<K> {
             return GUIGlobals.Glue.Get<T>(minimumLoadingState).Instance;
         }
 
-        public GameClient gameClient {
-            get {
-                var gameClientProxy = glueInstance<GameClientGlue, IGameClient>();
+        public IGameClient clientInterface => glueInstance<GameClientGlue, IGameClient>();
 
-                return Reflection.proxy<Class3157, GameClient>(gameClientProxy)
-                    .deep<Class3159>("igameClient_0")
-                    .deepAndResolve("gameClient_0");
-            }
-        }
+        public GameClient client => clientInterface.GetGame();
+
+        public ViewState viewState => clientInterface.GetViewState();
+        
+        public UI_HUDBase hud => glueInstance<HUDBaseGlue, UI_HUDBase>();
+
+        public PlayersWrapper.References players => new PlayersWrapper.References();
     }
 }

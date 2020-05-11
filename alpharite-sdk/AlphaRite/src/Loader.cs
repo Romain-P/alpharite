@@ -1,6 +1,9 @@
 ﻿using System;
+using MergedUnity.Glues;
+using MergedUnity.Glues.GUI;
 using StunShared;
 using UnityEngine;
+using UnityShared;
 
 namespace AlphaRite
 {
@@ -8,6 +11,7 @@ namespace AlphaRite
         private static GameObject _alphaRiteInstance;
         
         public static void init() {
+            CommandLineSettings.Settings.UseConsole = true;
             Alpharite.println("Initializing injection");
             _alphaRiteInstance = new GameObject();
                 

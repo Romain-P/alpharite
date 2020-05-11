@@ -65,6 +65,8 @@
         <Compile Include="src\sdk\shared\AlphaCycle.cs" />
         <Compile Include="src\sdk\shared\Hook.cs" />
         <Compile Include="src\sdk\shared\Reflection.cs" />
+        <Compile Include="src\sdk\shared\Wrapper.cs" />
+        <Compile Include="src\sdk\wrappers\PlayersWrapper.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

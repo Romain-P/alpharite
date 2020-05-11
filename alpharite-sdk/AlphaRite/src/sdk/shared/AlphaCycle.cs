@@ -19,7 +19,10 @@
 
         protected void enableHook(string alias) {
             var hook = methods[alias];
-            patcher.Patch(hook.originalMethod, hook.hookMethod);
+            if (hook.mode == Hook.HookMode.PREFIX)
+                patcher.Patch(hook.originalMethod, prefix: hook.hookMethod);
+            else if (hook.mode == Hook.HookMode.POSTFIX)
+                patcher.Patch(hook.originalMethod, postfix: hook.hookMethod);
         }
 
         protected void disableHook(string alias) {
@@ -27,23 +30,23 @@
             patcher.Unpatch(hook.originalMethod, hook.hookMethod.method);
         }
 
-        protected void hookMethod<TO, TH>(string alias, string originalMethod, string hookMethod) {
+        protected void hookMethod<TO, TH>(string alias, string originalMethod, string hookMethod, Hook.HookMode mode = Hook.HookMode.PREFIX) {
             var detour = new Hook(typeof(TO).GetMethod(originalMethod), 
-                new HarmonyMethod(typeof(TH).GetMethod(hookMethod)));
+                new HarmonyMethod(typeof(TH).GetMethod(hookMethod)), mode);
             
             methods[alias] = detour;
         }
         
-        protected void hookGetProperty<TO, TH>(string alias, string original, string hook) {
+        protected void hookGetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
             var detour = new Hook(typeof(TO).GetProperty(original)?.GetGetMethod(), 
-                new HarmonyMethod(typeof(TH).GetMethod(hook)));
+                new HarmonyMethod(typeof(TH).GetMethod(hook)), mode);
             
             methods[alias] = detour;
         }
         
-        protected void hookSetProperty<TO, TH>(string alias, string original, string hook) {
+        protected void hookSetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
             var detour = new Hook(typeof(TO).GetProperty(original)?.GetSetMethod(), 
-                new HarmonyMethod(typeof(TH).GetMethod(hook)));
+                new HarmonyMethod(typeof(TH).GetMethod(hook)), mode);
             
             methods[alias] = detour;
         }
