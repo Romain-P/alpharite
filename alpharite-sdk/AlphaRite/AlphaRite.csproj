@@ -59,9 +59,10 @@
         <Compile Include="src\Console.cs" />
         <Compile Include="src\Loader.cs" />
         <Compile Include="src\sdk\AlphariteSdk.cs" />
+        <Compile Include="src\sdk\gui\Gui.cs" />
+        <Compile Include="src\sdk\gui\UIHelper.cs" />
         <Compile Include="src\sdk\hacks\Aimbot.cs" />
         <Compile Include="src\sdk\hacks\CameraUnlock.cs" />
-        <Compile Include="src\sdk\hacks\gui\Gui.cs" />
         <Compile Include="src\sdk\hacks\WallHack.cs" />
         <Compile Include="src\sdk\ReferenceHolder.cs" />
         <Compile Include="src\sdk\shared\AlphaCycle.cs" />

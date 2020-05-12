@@ -21,7 +21,7 @@ namespace AlphaRite.sdk {
                 _type = typeof(TProxyType);
 
                 if (_instance == null)
-                    Alpharite.println("Error while resolving field {} (type {}) inside class {}",
+                    Alpharite.println("Error while resolving field {0} (type {1}) inside class {2}",
                         proxyFieldName, _type, cache);
 
                 return this;

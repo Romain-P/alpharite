@@ -2,7 +2,6 @@
 
  namespace AlphaRite.sdk.hacks {
     public class CameraUnlock: AlphaCycle {
-        private float _originalMaxDistance;
         public CameraUnlock(AlphariteSdk sdk) : base(sdk) {}
 
         protected override void onStart() {
