@@ -60,6 +60,7 @@
         <Compile Include="src\Loader.cs" />
         <Compile Include="src\sdk\AlphariteSdk.cs" />
         <Compile Include="src\sdk\hacks\Aimbot.cs" />
+        <Compile Include="src\sdk\hacks\CameraUnlock.cs" />
         <Compile Include="src\sdk\hacks\gui\Gui.cs" />
         <Compile Include="src\sdk\hacks\WallHack.cs" />
         <Compile Include="src\sdk\ReferenceHolder.cs" />
@@ -67,6 +68,7 @@
         <Compile Include="src\sdk\shared\Hook.cs" />
         <Compile Include="src\sdk\shared\Reflection.cs" />
         <Compile Include="src\sdk\shared\Wrapper.cs" />
+        <Compile Include="src\sdk\wrappers\MapObjectWrapper.cs" />
         <Compile Include="src\sdk\wrappers\PlayerWrapper.cs" />
     </ItemGroup>
     <ItemGroup>

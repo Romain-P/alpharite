@@ -42,6 +42,8 @@ namespace AlphaRite.sdk {
         public IGameplayData data => glueInstance<GameplayDataGlue, IGameplayData>();
 
         public PlayerWrapper.References players => new PlayerWrapper.References();
+        
+        public MapObjectWrapper mapObjects => new MapObjectWrapper();
 
         public bool inMatch => viewState != null && !viewState.IsLoading;
     }

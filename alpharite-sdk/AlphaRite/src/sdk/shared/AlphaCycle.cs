@@ -44,7 +44,7 @@
         }
         
         protected void hookGetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
-            var detour = new Hook(typeof(TO).GetProperty(original).GetGetMethod(), 
+            var detour = new Hook(typeof(TO).getProperty(original).GetGetMethod(), 
                 new HarmonyMethod(typeof(TH).getMethod(hook)), mode);
             
             _methods[alias] = detour;

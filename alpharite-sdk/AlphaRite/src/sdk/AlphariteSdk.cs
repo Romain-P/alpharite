@@ -8,8 +8,10 @@ using AlphaRite.sdk.hacks;
  using UnityShared;
 
  namespace AlphaRite.sdk {
-    public class AlphariteSdk {
+
+     public class AlphariteSdk {
         private Dictionary<string, AlphaCycle> _cycles;
+        public Dictionary<string, object> settings { get; }
         public ReferenceHolder refs { get; }
         public Harmony patcher { get; }
         
@@ -17,6 +19,7 @@ using AlphaRite.sdk.hacks;
             patcher = new Harmony("AlphaRite.sdk");
             
             _cycles = new Dictionary<string, AlphaCycle>();
+            settings = new Dictionary<string, object>();
             refs = new ReferenceHolder();
             
             subscribeHacks();
@@ -38,6 +41,7 @@ using AlphaRite.sdk.hacks;
         void subscribeHacks() {
             _cycles["wallhack"] = new WallHack(this);
             _cycles["aimbot"] = new Aimbot(this);
+            _cycles["cameraUnlock"] = new CameraUnlock(this);
             _cycles["gui"] = new Gui(this);
         }
 
