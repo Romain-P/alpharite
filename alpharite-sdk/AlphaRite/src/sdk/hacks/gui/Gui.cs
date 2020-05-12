@@ -54,10 +54,10 @@ namespace AlphaRite.sdk.hacks.gui {
                         if (player.AllyTeam)
                             continue;
                         GUI.color = Color.red;
-                        GUI.Label(new Rect(10, 40 + offset, 180, 20), $"[WIP]");
+                        GUI.Label(new Rect(10, 40 + offset, 180, 20), $"[{player.Name}]");
                         GUI.color = Color.yellow;
-                        GUI.Box(new Rect(10, 60 + offset, 180, 20), $"4/4 - Distance {player.position().X} {player.position().Y} cellules");
-                        offset += 40;
+                        GUI.Box(new Rect(10, 60 + offset, 180, 40), $"Energy {player.Energy}/4\nDistance {player.position().X} {player.position().Y}");
+                        offset += 60;
                     }
             }
             catch (Exception e)
@@ -77,7 +77,7 @@ namespace AlphaRite.sdk.hacks.gui {
 
             if (sdk.refs.players?.player != null){
                 GUI.color = Color.blue;
-                GUI.Label(new Rect(10, 200 + offset, 180, 20), "Player");
+                GUI.Label(new Rect(10, 200 + offset, 180, 20), $"Player [{sdk.refs.players.player.Name}]");
                 GUI.color = Color.white;
                 GUI.Box(new Rect(10, 220 + offset, 180, 20), $"Pos X: {sdk.refs.players.player.position().X}, Y: {sdk.refs.players.player.position().Y}");
                 offset += 40;
