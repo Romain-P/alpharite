@@ -17,11 +17,11 @@ namespace AlphaRite.sdk.hacks {
         }
 
         protected override void onUpdate() {
-            if (sdk.refs.viewState.IsLoading || !sdk.refs.viewState.IsInPractice || !sdk.refs.viewState.IsInLobby) return;
-            for (var i = 0; i < sdk.refs.viewState.ActiveObjects.Count; i++) {
+            //if (sdk.refs.viewState.IsLoading || !(sdk.refs.viewState.IsInPractice || sdk.refs.viewState.IsInLobby)) return;
+            for (var i = 0; i < sdk.refs.viewState?.ActiveObjects.Count; i++) {
                 var type = sdk.refs.viewState.ActiveObjects.Values[i].TypeId;
                 
-                //Alpharite.println(sdk.refs.data.GetTypeName(type));
+                Alpharite.println(sdk.refs.data.GetTypeName(type));
             }
 
             //Alpharite.println("position: {0}", sdk.refs.players.playerPosition);

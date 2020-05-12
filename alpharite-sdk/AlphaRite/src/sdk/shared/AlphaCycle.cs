@@ -6,27 +6,33 @@
  namespace AlphaRite.sdk {
     public abstract class AlphaCycle {
         private bool _enabled;
-        private Dictionary<String, Hook> methods;
+        private Dictionary<String, Hook> _methods;
+        private bool _requiresInMatch;
         protected AlphariteSdk sdk;
         protected Harmony patcher;
         
-        public AlphaCycle(AlphariteSdk sdk) {
-            this.methods = new Dictionary<string, Hook>();
+        public AlphaCycle(AlphariteSdk sdk, bool requiresInMatch = true) {
+            this._methods = new Dictionary<string, Hook>();
             this._enabled = false;
             this.sdk = sdk;
             this.patcher = sdk.patcher;
+            this._requiresInMatch = requiresInMatch;
         }
 
         protected void enableHook(string alias) {
-            var hook = methods[alias];
-            if (hook.mode == Hook.HookMode.PREFIX)
-                patcher.Patch(hook.originalMethod, prefix: hook.hookMethod);
-            else if (hook.mode == Hook.HookMode.POSTFIX)
-                patcher.Patch(hook.originalMethod, postfix: hook.hookMethod);
+            var hook = _methods[alias];
+            switch (hook.mode) {
+                case Hook.HookMode.PREFIX:
+                    patcher.Patch(hook.originalMethod, prefix: hook.hookMethod);
+                    break;
+                case Hook.HookMode.POSTFIX:
+                    patcher.Patch(hook.originalMethod, postfix: hook.hookMethod);
+                    break;
+            }
         }
 
         protected void disableHook(string alias) {
-            var hook = methods[alias];
+            var hook = _methods[alias];
             patcher.Unpatch(hook.originalMethod, hook.hookMethod.method);
         }
 
@@ -34,29 +40,29 @@
             var detour = new Hook(typeof(TO).getMethod(originalMethod), 
                 new HarmonyMethod(typeof(TH).getMethod(hookMethod)), mode);
             
-            methods[alias] = detour;
+            _methods[alias] = detour;
         }
         
         protected void hookGetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
             var detour = new Hook(typeof(TO).GetProperty(original).GetGetMethod(), 
                 new HarmonyMethod(typeof(TH).getMethod(hook)), mode);
             
-            methods[alias] = detour;
+            _methods[alias] = detour;
         }
         
         protected void hookSetProperty<TO, TH>(string alias, string original, string hook, Hook.HookMode mode = Hook.HookMode.PREFIX) {
             var detour = new Hook(typeof(TO).getProperty(original).GetSetMethod(), 
                 new HarmonyMethod(typeof(TH).getMethod(hook)), mode);
             
-            methods[alias] = detour;
+            _methods[alias] = detour;
         }
 
         protected MethodInfo original(string alias) {
-            return methods[alias].originalMethod;
+            return _methods[alias].originalMethod;
         }
 
         protected HarmonyMethod hook(string alias) {
-            return methods[alias].hookMethod;
+            return _methods[alias].hookMethod;
         }
 
         protected abstract void onStart();
@@ -77,13 +83,15 @@
         }
 
         public void update() {
-            if (!_enabled) return;
+            if (!_enabled || !respectsConstraints) return;
             onUpdate();
         }
 
         public void renderingUpdate() {
-            if (!_enabled) return;
+            if (!_enabled || !respectsConstraints) return;
             onRenderingUpdate();
         }
+
+        private bool respectsConstraints => !_requiresInMatch || _requiresInMatch && sdk.refs.inMatch;
     }
 }

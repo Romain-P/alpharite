@@ -9,6 +9,7 @@ using Gameplay;
 using Gameplay.DataIO;
 using Gameplay.GameObjects;
 using Gameplay.View;
+using JetBrains.Annotations;
 using MathCore;
 using MergedUnity.Glues;
 using MergedUnity.Glues.GUI;
@@ -26,19 +27,22 @@ namespace AlphaRite.sdk {
         }
 
         public K glueInstance<T, K>(LoadingState minimumLoadingState = LoadingState.Ready) where T: InstancingGlue<K> {
-            return GUIGlobals.Glue.Get<T>(minimumLoadingState).Instance;
+            var glue = GUIGlobals.Glue.Get<T>(minimumLoadingState);
+            return glue == null ? default : glue.Instance;
         }
 
-        public IGameClient clientInterface => glueInstance<GameClientGlue, IGameClient>();
+        [CanBeNull] public IGameClient clientInterface => glueInstance<GameClientGlue, IGameClient>();
 
-        public GameClient client => clientInterface.GetGame();
+        [CanBeNull] public GameClient client => clientInterface?.GetGame();
 
-        public ViewState viewState => clientInterface.GetViewState();
+        [CanBeNull] public ViewState viewState => clientInterface?.GetViewState();
         
         public UI_HUDBase hud => glueInstance<HUDBaseGlue, UI_HUDBase>();
         
         public IGameplayData data => glueInstance<GameplayDataGlue, IGameplayData>();
 
         public PlayerWrapper.References players => new PlayerWrapper.References();
+
+        public bool inMatch => viewState != null && !viewState.IsLoading;
     }
 }
