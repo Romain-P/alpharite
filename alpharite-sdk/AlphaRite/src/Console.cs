@@ -21,9 +21,9 @@ namespace AlphaRite {
                 ConsoleWindow.Title = "AlphaRite Logs";
             }
 
-            ConsoleWindow.StandardOut.WriteLine("[INFO]:\t"+msg, args);
-            ConsoleWindow.StandardOut.Flush();
-            Debug.LogError(string.Format(msg, args));
+            //ConsoleWindow.StandardOut.WriteLine("[INFO]:\t"+msg, args);
+            //ConsoleWindow.StandardOut.Flush();
+            //Debug.LogError(string.Format(msg, args));
             Gui.AddMsg(string.Format(msg, args));
         }
     }
