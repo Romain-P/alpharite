@@ -48,6 +48,8 @@ namespace AlphaRite.sdk.wrappers {
 
                     var mousePosition = Input.mousePosition.toDualDimension();
                     foreach (var p in refs.players.enemies) {
+                        if (!p.isValid()) continue;
+                        
                         var pos = mousePosition - p.screenPosition().toDualDimension();
                         var dist = pos.magnitude();
 
@@ -109,6 +111,10 @@ namespace AlphaRite.sdk.wrappers {
         
         public static UnityEngine.Vector2 toDualDimensionUnity(this Vector3 self) {
             return new UnityEngine.Vector2(self.x, self.y);
+        }
+
+        public static bool isValid(this Data_PlayerInfo self) {
+            return !self.IsDead && !self.IsDisconnected;
         }
     }
 }

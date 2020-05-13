@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace AlphaRite.sdk.hacks {
     public class Aimbot: AlphaCycle {
+        private float _aimMagnitudeCache;
         public Aimbot(AlphariteSdk sdk): base(sdk) {}
 
         protected override void onStart() {
@@ -14,11 +15,10 @@ namespace AlphaRite.sdk.hacks {
 
             if (target.ID.Index > 0 && Input.GetKey(KeyCode.LeftAlt)) {
                 var pos = target.screenPosition();
-                lockAim(pos.x, pos.y);
+                lockAimOnDirection(pos);
             }
         }
 
-        //TODO: smooth
         private void lockAimOnDirection(Vector3 targetScreenPosition) {
             var playerPosition = sdk.refs.players.player.screenPosition().toDualDimensionUnity();
             var mousePosition = Input.mousePosition.toDualDimensionUnity();
@@ -27,7 +27,10 @@ namespace AlphaRite.sdk.hacks {
             var playerVector = mousePosition - playerPosition;
             var targetVector = targetPosition - playerPosition;
 
-            var point = playerPosition + (playerVector.magnitude * targetVector.normalized);
+            if (Input.GetKeyDown(KeyCode.LeftAlt))
+                _aimMagnitudeCache = playerVector.magnitude;
+
+            var point = playerPosition + (_aimMagnitudeCache * targetVector.normalized);
             lockAim(point.x, point.y);
         }
 
