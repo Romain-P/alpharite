@@ -114,6 +114,7 @@ namespace AlphaRite.sdk.hacks.gui {
             {
                 _panelOpen = !_panelOpen;
                 _change = true;
+                sdk.disableCycle("aimbot");
             } else if ((!Input.GetKey(KeyCode.Insert)) && _change)
                 _change = false;
     

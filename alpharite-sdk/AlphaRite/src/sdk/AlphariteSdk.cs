@@ -1,6 +1,6 @@
-﻿﻿using System;
+﻿ ﻿using System;
  using System.Collections.Generic;
-using AlphaRite.sdk.hacks;
+ using AlphaRite.sdk.hacks;
  using AlphaRite.sdk.hacks.gui;
  using HarmonyLib;
  using MergedUnity.Glues;

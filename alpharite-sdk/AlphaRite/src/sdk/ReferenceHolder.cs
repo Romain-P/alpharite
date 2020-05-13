@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using AlphaRite.sdk.wrappers;
-using Avro;
-using BloodGUI;
 using BloodGUI_Binding.Base;
-using BloodGUI_Binding.HUD;
 using Gameplay;
-using Gameplay.DataIO;
-using Gameplay.GameObjects;
 using Gameplay.View;
 using JetBrains.Annotations;
-using MathCore;
 using MergedUnity.Glues;
 using MergedUnity.Glues.GUI;
-using ns18;
 using RemoteClient;
 using StunShared.GlueSystem;
-using UnityShared;
+using UnityEngine;
 
 namespace AlphaRite.sdk {
     public class ReferenceHolder {
@@ -42,7 +34,9 @@ namespace AlphaRite.sdk {
         public IGameplayData data => glueInstance<GameplayDataGlue, IGameplayData>();
 
         public PlayerWrapper.References players => new PlayerWrapper.References();
-        
+
+        [CanBeNull] public Camera camera => GUIGlobals.Glue.Get<GameplayCameraGlue>()?.Instance.Camera;
+
         public MapObjectWrapper mapObjects => new MapObjectWrapper();
 
         public bool inMatch => viewState != null && !viewState.IsLoading;

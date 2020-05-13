@@ -67,7 +67,9 @@
         <Compile Include="src\sdk\ReferenceHolder.cs" />
         <Compile Include="src\sdk\shared\AlphaCycle.cs" />
         <Compile Include="src\sdk\shared\Hook.cs" />
+        <Compile Include="src\sdk\shared\MathUtil.cs" />
         <Compile Include="src\sdk\shared\Reflection.cs" />
+        <Compile Include="src\sdk\shared\UnmanagedUtil.cs" />
         <Compile Include="src\sdk\shared\Wrapper.cs" />
         <Compile Include="src\sdk\wrappers\MapObjectWrapper.cs" />
         <Compile Include="src\sdk\wrappers\PlayerWrapper.cs" />

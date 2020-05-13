@@ -3,7 +3,8 @@ using BloodGUI;
 using BloodGUI_Binding.HUD;
 using Gameplay;
 using Gameplay.GameObjects;
-using MathCore;
+using UnityEngine;
+using Vector2 = MathCore.Vector2;
 
 namespace AlphaRite.sdk.wrappers {
     public static class PlayerWrapper {
@@ -14,9 +15,7 @@ namespace AlphaRite.sdk.wrappers {
         //////////////////
         public class References: Wrapper {
             public UI_PlayersInfoBinding unwrapped => refs.hud.getFieldValue<UI_PlayersInfoBinding>("_PlayersInfoBinding");
-            
             public List<Data_PlayerInfo> enemies => unwrapped.getFieldValue<List<Data_PlayerInfo>>("_EnemyTeamData");
-            
             public List<Data_PlayerInfo> allies => unwrapped.getFieldValue<List<Data_PlayerInfo>>("_LocalTeamData");
             
             public Data_PlayerInfo player {
@@ -41,6 +40,26 @@ namespace AlphaRite.sdk.wrappers {
                     return infos;
                 }
             }
+            
+            public Data_PlayerInfo nearestEnemyFromCursor {
+                get {
+                    Data_PlayerInfo nearest = default;
+                    var lowestDist = float.MaxValue;
+
+                    var mousePosition = Input.mousePosition.toDualDimension();
+                    foreach (var p in refs.players.enemies) {
+                        var pos = mousePosition - p.screenPosition().toDualDimension();
+                        var dist = pos.magnitude();
+
+                        if (dist >= lowestDist) continue;
+
+                        lowestDist = dist;
+                        nearest = p;
+                    }
+
+                    return nearest;
+                }
+            }
         }
 
         //////////////////
@@ -52,6 +71,44 @@ namespace AlphaRite.sdk.wrappers {
         
         public static Vector2 position(this GameObjectId self) {
             return refs?.client?.GetState(self, "Position", false) ?? default;
+        }
+
+        public static Vector3 screenPosition(this GameObjectId self) {
+            var position = self.position();
+            var adjusted = refs.camera.WorldToScreenPoint(new Vector3(position.X, 0, position.Y));
+
+            adjusted.y = Screen.height - adjusted.y;
+            return adjusted;
+        }
+        
+        public static Vector3 screenPosition(this Data_PlayerInfo self) {
+            var position = self.position();
+            var adjusted = refs.camera.WorldToScreenPoint(new Vector3(position.X, 0, position.Y));
+
+            adjusted.y = Screen.height - adjusted.y;
+            return adjusted;
+        }
+        
+        public static Vector3 toScreenPosition(this Vector2 self) {
+            var adjusted = refs.camera.WorldToScreenPoint(new Vector3(self.X, 0, self.Y));
+
+            adjusted.y = Screen.height - adjusted.y;
+            return adjusted;
+        }
+        
+        public static Vector3 toScreenPosition(this Vector3 self) {
+            var adjusted = refs.camera.WorldToScreenPoint(new Vector3(self.x, 0, self.y));
+
+            adjusted.y = Screen.height - adjusted.y;
+            return adjusted;
+        }
+
+        public static Vector2 toDualDimension(this Vector3 self) {
+            return new Vector2(self.x, self.y);
+        }
+        
+        public static UnityEngine.Vector2 toDualDimensionUnity(this Vector3 self) {
+            return new UnityEngine.Vector2(self.x, self.y);
         }
     }
 }

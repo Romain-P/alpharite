@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
 using AlphaRite.sdk.hacks.gui;
-using UnityEngine;
 
 // --------------------------------------------------
 // UnityInjector - ConsoleWindow.cs
@@ -13,7 +12,7 @@ using UnityEngine;
 // Ported from BepInEx project
 // ----------------
 namespace AlphaRite {
-    internal class Alpharite {
+    public class Alpharite {
 
         public static void println(string msg, params object[] args) {
             if (!ConsoleWindow.IsAttached) {
@@ -21,9 +20,8 @@ namespace AlphaRite {
                 ConsoleWindow.Title = "AlphaRite Logs";
             }
 
-            //ConsoleWindow.StandardOut.WriteLine("[INFO]:\t"+msg, args);
-            //ConsoleWindow.StandardOut.Flush();
-            //Debug.LogError(string.Format(msg, args));
+            ConsoleWindow.StandardOut.WriteLine("[INFO]:\t"+msg, args);
+            ConsoleWindow.StandardOut.Flush();
             Gui.AddMsg(string.Format(msg, args));
         }
     }
