@@ -11,5 +11,7 @@ Feel free to contribute
 * `releases`	 : contains alpharite releases, read inner readme
 
 #### Current features
-[10 May 2020]
 * Wallhack
+* Aimbot (aimkey for enable)
+* Camera unlock
+* GUI in match only (press INSERT for show/hide)
