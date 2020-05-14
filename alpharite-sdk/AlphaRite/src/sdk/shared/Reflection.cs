@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace AlphaRite.sdk {
@@ -89,6 +90,11 @@ namespace AlphaRite.sdk {
 
         public static string format(this string self, params object[] args) {
             return string.Format(self, args);
+        }
+        
+        public static bool call<T>(string name, params object[] args) {
+            var function = typeof(T).GetMethod(name,args.Select(x => x.GetType()).ToArray());
+            return (bool) function.Invoke(null, args);
         }
     }
 }

@@ -38,11 +38,24 @@
             Alpharite.println("Disabled {0} successfully", cycleAlias);
         }
 
+        public void toggleCycle(string cycleAlias) {
+            var cycle = _cycles[cycleAlias] ?? throw new Exception("Cycle {0} does not exist".format(cycleAlias));
+            
+            if (cycle.enabled)
+                disableCycle(cycleAlias);
+            else
+                enableCycle(cycleAlias);
+        }
+
+        public bool cycleEnabled(string cycleAlias) {
+            return _cycles[cycleAlias].enabled;
+        }
+
         void subscribeHacks() {
             _cycles["wallhack"] = new WallHack(this);
             _cycles["aimbot"] = new Aimbot(this);
             _cycles["cameraUnlock"] = new CameraUnlock(this);
-            _cycles["gui"] = new Gui(this);
+            _cycles["gui"] = new Overlay(this);
         }
 
         void subscribeScripts() {

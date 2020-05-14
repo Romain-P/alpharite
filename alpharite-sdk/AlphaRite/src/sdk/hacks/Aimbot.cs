@@ -28,7 +28,7 @@ namespace AlphaRite.sdk.hacks {
             var targetVector = targetPosition - playerPosition;
 
             if (Input.GetKeyDown(KeyCode.LeftAlt))
-                _aimMagnitudeCache = playerVector.magnitude;
+                _aimMagnitudeCache = Math.Max(_aimMagnitudeCache, 300);
 
             var point = playerPosition + (_aimMagnitudeCache * targetVector.normalized);
             lockAim(point.x, point.y);

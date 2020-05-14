@@ -22,7 +22,7 @@ namespace AlphaRite {
 
             ConsoleWindow.StandardOut.WriteLine("[INFO]:\t"+msg, args);
             ConsoleWindow.StandardOut.Flush();
-            Gui.AddMsg(string.Format(msg, args));
+            //Gui.AddMsg(string.Format(msg, args));
         }
     }
 

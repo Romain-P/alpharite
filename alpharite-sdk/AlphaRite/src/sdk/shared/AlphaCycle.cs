@@ -5,7 +5,7 @@
 
  namespace AlphaRite.sdk {
     public abstract class AlphaCycle {
-        private bool _enabled;
+        public bool enabled { get; private set; }
         private Dictionary<String, Hook> _methods;
         private bool _requiresInMatch;
         protected AlphariteSdk sdk;
@@ -13,7 +13,7 @@
         
         public AlphaCycle(AlphariteSdk sdk, bool requiresInMatch = true) {
             this._methods = new Dictionary<string, Hook>();
-            this._enabled = false;
+            this.enabled = false;
             this.sdk = sdk;
             this.patcher = sdk.patcher;
             this._requiresInMatch = requiresInMatch;
@@ -65,30 +65,30 @@
             return _methods[alias].hookMethod;
         }
 
-        protected abstract void onStart();
-        protected abstract void onStop();
+        protected virtual void onStart() {}
+        protected virtual void onStop() {}
         protected virtual void onUpdate() {}
         protected virtual void onRenderingUpdate() {}
         
         public void enable() {
-            if (_enabled) return;
+            if (enabled) return;
             onStart();
-            _enabled = true;
+            enabled = true;
         }
 
         public void disable() {
-            if (!_enabled) return;
+            if (!enabled) return;
             onStop();
-            _enabled = false;
+            enabled = false;
         }
 
         public void update() {
-            if (!_enabled || !respectsConstraints) return;
+            if (!enabled || !respectsConstraints) return;
             onUpdate();
         }
 
         public void renderingUpdate() {
-            if (!_enabled || !respectsConstraints) return;
+            if (!enabled || !respectsConstraints) return;
             onRenderingUpdate();
         }
 
