@@ -17,20 +17,21 @@ namespace AlphaRite.sdk.hacks.gui {
         }
 
         protected override void onRenderingUpdate() {
-            _builderPositionCache = DefaultElementHeight;
-            
             GUI.Window(0, new Rect(_windowPosition.x, _windowPosition.y , WindowWidth, WindowHeight), 
                 buildWindow, "AlphaRite");
         }
 
         private void buildWindow(int id) {
-            //GUI.DragWindow();
+            _builderPositionCache = DefaultElementHeight;
+            GUI.DragWindow();
 
             GUI.Label(nextPosition(), "Camera Distance");
             var cameraDistance = GUI.HorizontalSlider(nextPosition(), (float) sdk.settings["cameraMaxDistance"], 0f, 100f);
 
-            if (Button(nextPosition(), "Wallhack", sdk.cycleEnabled("wallhack")))
+            if (Button(nextPosition(), "Wallhack", sdk.cycleEnabled("wallhack"))) {
+                Alpharite.println("FUCK YOU TOO");
                 sdk.toggleCycle("wallhack");
+            }
 
             if (GUI.changed) {
                 sdk.settings["cameraMaxDistance"] = cameraDistance;

@@ -48,7 +48,8 @@
         }
 
         public bool cycleEnabled(string cycleAlias) {
-            return _cycles[cycleAlias].enabled;
+            var cycle = _cycles[cycleAlias] ?? throw new Exception("Cycle {0} does not exist".format(cycleAlias));
+            return cycle.enabled;
         }
 
         void subscribeHacks() {
