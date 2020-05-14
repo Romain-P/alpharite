@@ -1,1 +1,3 @@
-*.* c#
+*.ts linguist-detectable=false
+game-data/*.ts linguist-detectable=false
+*.cs *.ts linguist-detectable=true
