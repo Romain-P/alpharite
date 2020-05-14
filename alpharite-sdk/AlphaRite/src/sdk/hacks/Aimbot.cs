@@ -13,6 +13,7 @@ namespace AlphaRite.sdk.hacks {
 
         protected override void onStart() {
             sdk.settings["aimbotHard"] = false;
+            sdk.settings["aimbotMaxDistance"] = Screen.width / 2;
             sdk.settings["aimbotHardTarget"] = false;
             sdk.settings["aimbotDirectionlockKey"] = KeyCode.LeftAlt;
             sdk.settings["aimbotTargetlockKey"] = KeyCode.W;
@@ -36,9 +37,9 @@ namespace AlphaRite.sdk.hacks {
         }
 
         private void aimbotActivated(bool hardLock, bool refreshPosition) {
-            var target = sdk.refs.players.nearestEnemyFromCursor;
-
             if (!sdk.getSetting<bool>("aimbotKeepTarget") || refreshPosition) {
+                var target = sdk.refs.players.nearestEnemyFromCursor;
+                
                 if (target.ID.Index > 0)
                     _aimTargetCache = new GameObjectId(target.ID.Index, target.ID.Generation);
                 else {
@@ -54,8 +55,9 @@ namespace AlphaRite.sdk.hacks {
                 }
             }
             var screenPosition = _aimTargetCache.screenPosition();
+            var distance = (sdk.refs.players.player.screenPosition() - screenPosition).magnitude;
 
-            if (!onScreenArea(screenPosition))
+            if (!onScreenArea(screenPosition) || distance > sdk.getSetting<int>("aimbotMaxDistance"))
                 return;
             if (hardLock)
                 lockAim(screenPosition.x, screenPosition.y);

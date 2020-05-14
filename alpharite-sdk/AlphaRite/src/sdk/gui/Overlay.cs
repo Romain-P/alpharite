@@ -56,7 +56,7 @@ namespace AlphaRite.sdk.hacks.gui {
                 sdk.settings["aimbotHardTarget"] = !aimbotHardTarget;
 
             if (!aimbotHard) {
-                GUILayout.Label("Aimbot - Keyboard input activation");
+                GUILayout.Label("Aimbot - Keyboard input Activation");
                 if (GUILayout.Button(_waitingForKey1
                         ? PressAnyKey
                         : $"TARGET-LOCK        -    ${sdk.settings["aimbotTargetlockKey"]}") && !_waitingForKey1 &&
@@ -69,14 +69,18 @@ namespace AlphaRite.sdk.hacks.gui {
                     !_waitingForKey2)
                     _waitingForKey2 = true;
                 
-                GUILayout.Label("Aimbot - keep tracking the same target");
+                GUILayout.Label("Aimbot - Track same Target");
                 var keepTarget = sdk.getSetting<bool>("aimbotKeepTarget");
                 if (ToggleButton(keepTarget))
                     sdk.settings["aimbotKeepTarget"] = !keepTarget;
             }
             
+            GUILayout.Label("Aimbot Max Distance");
+            var aimbotDistance = (int) GUILayout.HorizontalSlider(sdk.getSetting<int>("aimbotMaxDistance"), 0f, Screen.height);
+            
             if (GUI.changed) {
                 sdk.settings["cameraMaxDistance"] = cameraDistance;
+                sdk.settings["aimbotMaxDistance"] = aimbotDistance;
             }
 
             GUI.DragWindow();
