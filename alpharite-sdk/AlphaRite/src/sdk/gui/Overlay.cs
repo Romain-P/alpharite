@@ -59,13 +59,13 @@ namespace AlphaRite.sdk.hacks.gui {
                 GUILayout.Label("Aimbot - Keyboard input Activation");
                 if (GUILayout.Button(_waitingForKey1
                         ? PressAnyKey
-                        : $"TARGET-LOCK        -    ${sdk.settings["aimbotTargetlockKey"]}") && !_waitingForKey1 &&
+                        : $"LOCK (target) - [{sdk.settings["aimbotTargetlockKey"]}]") && !_waitingForKey1 &&
                     !_waitingForKey2)
                     _waitingForKey1 = true;
 
                 if (GUILayout.Button(_waitingForKey2
                         ? PressAnyKey
-                        : $"DIRECTION-LOCK     -    ${sdk.settings["aimbotDirectionlockKey"]}") && !_waitingForKey1 &&
+                        : $"LOCK (direction) - [{sdk.settings["aimbotDirectionlockKey"]}]") && !_waitingForKey1 &&
                     !_waitingForKey2)
                     _waitingForKey2 = true;
                 
