@@ -1,22 +1,66 @@
 ﻿using System;
 using AlphaRite.sdk.wrappers;
+using Gameplay.GameObjects;
+using Gameplay.View;
 using UnityEngine;
 
 namespace AlphaRite.sdk.hacks {
     public class Aimbot: AlphaCycle {
         private float _aimMagnitudeCache;
+        private GameObjectId _aimTargetCache;
+        
         public Aimbot(AlphariteSdk sdk): base(sdk) {}
 
         protected override void onStart() {
+            sdk.settings["aimbotHard"] = false;
+            sdk.settings["aimbotHardTarget"] = false;
+            sdk.settings["aimbotDirectionlockKey"] = KeyCode.LeftAlt;
+            sdk.settings["aimbotTargetlockKey"] = KeyCode.W;
+            sdk.settings["aimbotKeepTarget"] = true;
         }
 
         protected override void onUpdate() {
+            var aimTargetKey = sdk.getSetting<KeyCode>("aimbotTargetlockKey");
+            var aimDirectionKey = sdk.getSetting<KeyCode>("aimbotDirectionlockKey");
+
+            var alwaysMode = sdk.getSetting<bool>("aimbotHard");
+            var alwaysModeTarget = sdk.getSetting<bool>("aimbotHardTarget");
+            var targetKeyPressed = Input.GetKey(aimTargetKey);
+            var directionKeyPressed = Input.GetKey(aimDirectionKey);
+            var refreshPosition = Input.GetKeyDown(aimTargetKey) || Input.GetKeyDown(aimDirectionKey);
+
+            if (directionKeyPressed || (alwaysMode && !alwaysModeTarget))
+                aimbotActivated(false, refreshPosition);
+            else if (targetKeyPressed || alwaysMode)
+                aimbotActivated(true, refreshPosition);
+        }
+
+        private void aimbotActivated(bool hardLock, bool refreshPosition) {
             var target = sdk.refs.players.nearestEnemyFromCursor;
 
-            if (target.ID.Index > 0 && Input.GetKey(KeyCode.LeftAlt)) {
-                var pos = target.screenPosition();
-                lockAimOnDirection(pos);
+            if (!sdk.getSetting<bool>("aimbotKeepTarget") || refreshPosition) {
+                if (target.ID.Index > 0)
+                    _aimTargetCache = new GameObjectId(target.ID.Index, target.ID.Generation);
+                else {
+                    bool validDummy(ActiveObject x) =>
+                        !x.IsDead && x.ObjectId.Index != sdk.refs.players.player.ID.Index;
+
+                    var dummy = sdk.refs.mapObjects.retrieveNearestObject("ArenaDummy", validDummy);
+
+                    if (dummy.ObjectId.Index <= 0 || dummy.ObjectId.Index == sdk.refs.players.player.ID.Index)
+                        return;
+
+                    _aimTargetCache = dummy.ObjectId;
+                }
             }
+            var screenPosition = _aimTargetCache.screenPosition();
+
+            if (!onScreenArea(screenPosition))
+                return;
+            if (hardLock)
+                lockAim(screenPosition.x, screenPosition.y);
+            else
+                lockAimOnDirection(screenPosition);
         }
 
         private void lockAimOnDirection(Vector3 targetScreenPosition) {
@@ -28,7 +72,7 @@ namespace AlphaRite.sdk.hacks {
             var targetVector = targetPosition - playerPosition;
 
             if (Input.GetKeyDown(KeyCode.LeftAlt))
-                _aimMagnitudeCache = Math.Max(_aimMagnitudeCache, 300);
+                _aimMagnitudeCache = Math.Max(playerVector.magnitude, 300);
 
             var point = playerPosition + (_aimMagnitudeCache * targetVector.normalized);
             lockAim(point.x, point.y);

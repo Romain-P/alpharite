@@ -3,6 +3,7 @@ using BloodGUI;
 using BloodGUI_Binding.HUD;
 using Gameplay;
 using Gameplay.GameObjects;
+using Gameplay.View;
 using UnityEngine;
 using Vector2 = MathCore.Vector2;
 
@@ -82,7 +83,7 @@ namespace AlphaRite.sdk.wrappers {
             adjusted.y = Screen.height - adjusted.y;
             return adjusted;
         }
-        
+
         public static Vector3 screenPosition(this Data_PlayerInfo self) {
             var position = self.position();
             var adjusted = refs.camera.WorldToScreenPoint(new Vector3(position.X, 0, position.Y));

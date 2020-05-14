@@ -98,5 +98,9 @@
             
             GUIGlobals.Glue.Update();
         }
+        
+        public T getSetting<T>(string name) {
+            return (T) settings[name];
+        } 
     }
 }
