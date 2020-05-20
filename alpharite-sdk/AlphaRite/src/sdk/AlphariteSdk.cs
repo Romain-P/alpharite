@@ -11,6 +11,7 @@
 
      public class AlphariteSdk {
         private Dictionary<string, AlphaCycle> _cycles;
+        private InputHandler _inputHandler;
         public Dictionary<string, object> settings { get; }
         public ReferenceHolder refs { get; }
         public Harmony patcher { get; }
@@ -19,6 +20,7 @@
             patcher = new Harmony("AlphaRite.sdk");
             
             _cycles = new Dictionary<string, AlphaCycle>();
+            _inputHandler = new InputHandler();
             settings = new Dictionary<string, object>();
             refs = new ReferenceHolder();
             
@@ -81,6 +83,7 @@
         }
 
         public void onUpdate() {
+            _inputHandler.onUpdate();
             foreach (var cycle in _cycles.Values)
                 cycle.update();
         }
