@@ -1,6 +1,7 @@
 ﻿
 using AlphaRite.sdk.wrappers;
 using BloodGUI_Binding.Base;
+using CollisionLibrary;
 using Gameplay;
 using Gameplay.View;
 using JetBrains.Annotations;
@@ -40,5 +41,7 @@ namespace AlphaRite.sdk {
         public MapObjectWrapper mapObjects => new MapObjectWrapper();
 
         public bool inMatch => viewState != null && !viewState.IsLoading;
+
+        public Pathfinder pathfinder => client.getPropertyValue<Pathfinder>("Pathfinding");
     }
 }

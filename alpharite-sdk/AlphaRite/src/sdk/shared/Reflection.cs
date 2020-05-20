@@ -77,6 +77,18 @@ namespace AlphaRite.sdk {
         public static T getFieldValue<T>(this Object self, string name) where T : class {
             return getField(self, name).GetValue(self) as T;
         }
+        
+        public static PropertyInfo getProperty(this Object self, string name) {
+            return self.GetType().GetProperty(name, BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        public static Type getPropertyType(this Object self, string name) {
+            return getProperty( self, name).GetGetMethod().GetType();
+        }
+
+        public static T getPropertyValue<T>(this Object self, string name) where T : class {
+            return (T) self.GetType().GetProperty(name).GetValue(self, null);
+        }
 
         public static MethodInfo getMethod(this Type self, string methodName) {
             return self.GetMethod(methodName, 

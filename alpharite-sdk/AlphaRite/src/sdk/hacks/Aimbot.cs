@@ -1,5 +1,8 @@
 ﻿using System;
+using WindowsInput;
+using WindowsInput.Native;
 using AlphaRite.sdk.wrappers;
+using BloodGUI;
 using Gameplay.GameObjects;
 using Gameplay.View;
 using UnityEngine;
@@ -7,7 +10,7 @@ using UnityEngine;
 namespace AlphaRite.sdk.hacks {
     public class Aimbot: AlphaCycle {
         private float _aimMagnitudeCache;
-        private GameObjectId _aimTargetCache;
+        private Data_PlayerInfo _aimTargetCache;
         
         public Aimbot(AlphariteSdk sdk): base(sdk) {}
 
@@ -37,24 +40,20 @@ namespace AlphaRite.sdk.hacks {
         }
 
         private void aimbotActivated(bool hardLock, bool refreshPosition) {
-            if (!sdk.getSetting<bool>("aimbotKeepTarget") || refreshPosition) {
-                var target = sdk.refs.players.nearestEnemyFromCursor;
-                
-                if (target.ID.Index > 0)
-                    _aimTargetCache = new GameObjectId(target.ID.Index, target.ID.Generation);
-                else {
-                    bool validDummy(ActiveObject x) =>
-                        !x.IsDead && x.ObjectId.Index != sdk.refs.players.player.ID.Index;
+            var str = "";
+            for (var i = 0; i < sdk.refs.viewState.ActiveObjects.Count; i++) {
+                var type = sdk.refs.viewState.ActiveObjects.Values[i].TypeId;
 
-                    var dummy = sdk.refs.mapObjects.retrieveNearestObject("ArenaDummy", validDummy);
-
-                    if (dummy.ObjectId.Index <= 0 || dummy.ObjectId.Index == sdk.refs.players.player.ID.Index)
-                        return;
-
-                    _aimTargetCache = dummy.ObjectId;
-                }
+                str += sdk.refs.data.GetTypeName(type) + " - ";
             }
-            var screenPosition = _aimTargetCache.screenPosition();
+            Alpharite.println(str);
+            if (!sdk.getSetting<bool>("aimbotKeepTarget") || refreshPosition || !_aimTargetCache.isValid()) {
+                var target = sdk.refs.players.nearestEnemyFromCursor;
+
+                if (target.ID.Index > 0)
+                    _aimTargetCache = target;
+            }
+            var screenPosition = _aimTargetCache.screenPosition(1f);
             var distance = (sdk.refs.players.player.screenPosition() - screenPosition).magnitude;
 
             if (!onScreenArea(screenPosition) || distance > sdk.getSetting<int>("aimbotMaxDistance"))
