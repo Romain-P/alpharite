@@ -4,12 +4,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
-using WindowsInput;
-using WindowsInput.Native;
-using AlphaRite.sdk;
-using AlphaRite.sdk.hacks.gui;
-using AlphaRite.sdk.wrappers;
-using UnityEngine;
 
 // --------------------------------------------------
 // UnityInjector - ConsoleWindow.cs

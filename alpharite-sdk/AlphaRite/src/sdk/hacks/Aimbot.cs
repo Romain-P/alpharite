@@ -1,10 +1,6 @@
 ﻿using System;
-using WindowsInput;
-using WindowsInput.Native;
 using AlphaRite.sdk.wrappers;
 using BloodGUI;
-using Gameplay.GameObjects;
-using Gameplay.View;
 using UnityEngine;
 
 namespace AlphaRite.sdk.hacks {

@@ -1,17 +1,17 @@
 ﻿ ﻿using System;
- using System.Collections.Generic;
- using AlphaRite.sdk.hacks;
- using AlphaRite.sdk.hacks.gui;
- using HarmonyLib;
- using MergedUnity.Glues;
- using MergedUnity.Glues.GUI;
- using UnityShared;
+  using System.Collections.Generic;
+  using AlphaRite.sdk.hacks;
+  using AlphaRite.sdk.hacks.gui;
+  using HarmonyLib;
+  using MergedUnity.Glues;
+  using MergedUnity.Glues.GUI;
+  using UnityShared;
 
- namespace AlphaRite.sdk {
+  namespace AlphaRite.sdk {
 
      public class AlphariteSdk {
         private Dictionary<string, AlphaCycle> _cycles;
-        private InputHandler _inputHandler;
+        public InputHandler inputHandler { get; }
         public Dictionary<string, object> settings { get; }
         public ReferenceHolder refs { get; }
         public Harmony patcher { get; }
@@ -20,7 +20,7 @@
             patcher = new Harmony("AlphaRite.sdk");
             
             _cycles = new Dictionary<string, AlphaCycle>();
-            _inputHandler = new InputHandler();
+            inputHandler = new InputHandler();
             settings = new Dictionary<string, object>();
             refs = new ReferenceHolder();
             
@@ -83,7 +83,7 @@
         }
 
         public void onUpdate() {
-            _inputHandler.onUpdate();
+            inputHandler.onUpdate();
             foreach (var cycle in _cycles.Values)
                 cycle.update();
         }

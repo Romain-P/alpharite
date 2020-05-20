@@ -1,9 +1,8 @@
-﻿﻿using UnityEngine;
+﻿﻿using AlphaRite.sdk;
+ using UnityEngine;
 
-namespace AlphaRite {
-    using sdk;
-    
-    public class MonoScriptAdapter: MonoBehaviour{
+ namespace AlphaRite {
+     public class MonoScriptAdapter: MonoBehaviour{
         private AlphariteSdk _sdk;
 
         public MonoScriptAdapter() {

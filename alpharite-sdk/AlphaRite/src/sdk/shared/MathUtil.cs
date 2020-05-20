@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using Vector2 = MathCore.Vector2;
-using Vector3 = MathCore.Vector3;
 
 namespace AlphaRite.sdk {
     public static class MathUtil {
