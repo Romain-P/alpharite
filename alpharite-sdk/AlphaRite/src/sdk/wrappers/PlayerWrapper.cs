@@ -51,7 +51,7 @@ namespace AlphaRite.sdk.wrappers {
                     foreach (var p in refs.players.enemies) {
                         if (!p.isValid()) continue;
                         
-                        var pos = mousePosition - p.screenPosition().toDualDimension();
+                        var pos = p.screenPosition().toDualDimension() - mousePosition;
                         var dist = pos.magnitude();
 
                         if (dist >= lowestDist) continue;
@@ -68,39 +68,31 @@ namespace AlphaRite.sdk.wrappers {
         //////////////////
         ////Extensions////
         //////////////////
-        public static Vector2 position(this Data_PlayerInfo self) {
-            return new GameObjectId(self.ID.Index, self.ID.Generation).position();
+        public static Vector2 position(this Data_PlayerInfo self, float time = 0f) {
+            return new GameObjectId(self.ID.Index, self.ID.Generation).position(time);
         }
         
-        public static Vector2 position(this GameObjectId self) {
-            return refs?.client?.GetState(self, "Position", false) ?? default;
+        public static Vector2 position(this GameObjectId self, float time = 0f) {
+            //real-time
+            Vector2 pos = refs?.client?.GetState(self, "Position", false) ?? default;
+            if (time <= 0) return pos;
+            
+            //prediction
+            Vector2 velocity = refs?.client?.GetState(self, "Velocity", false) ?? default;
+            return pos + velocity.Normalized * time;
         }
 
-        public static Vector3 screenPosition(this GameObjectId self) {
-            var position = self.position();
+        public static Vector3 screenPosition(this GameObjectId self, float time = 0f) {
+            var position = self.position(time);
             var adjusted = refs.camera.WorldToScreenPoint(new Vector3(position.X, 0, position.Y));
 
             adjusted.y = Screen.height - adjusted.y;
             return adjusted;
         }
 
-        public static Vector3 screenPosition(this Data_PlayerInfo self) {
-            var position = self.position();
+        public static Vector3 screenPosition(this Data_PlayerInfo self, float time = 0f) {
+            var position = self.position(time);
             var adjusted = refs.camera.WorldToScreenPoint(new Vector3(position.X, 0, position.Y));
-
-            adjusted.y = Screen.height - adjusted.y;
-            return adjusted;
-        }
-        
-        public static Vector3 toScreenPosition(this Vector2 self) {
-            var adjusted = refs.camera.WorldToScreenPoint(new Vector3(self.X, 0, self.Y));
-
-            adjusted.y = Screen.height - adjusted.y;
-            return adjusted;
-        }
-        
-        public static Vector3 toScreenPosition(this Vector3 self) {
-            var adjusted = refs.camera.WorldToScreenPoint(new Vector3(self.x, 0, self.y));
 
             adjusted.y = Screen.height - adjusted.y;
             return adjusted;
@@ -114,8 +106,10 @@ namespace AlphaRite.sdk.wrappers {
             return new UnityEngine.Vector2(self.x, self.y);
         }
 
-        public static bool isValid(this Data_PlayerInfo self) {
-            return !self.IsDead && !self.IsDisconnected;
+        public static bool isValid(this Data_PlayerInfo self, Vector2? validFrom = null) {
+            var from = validFrom ?? refs.players.player.position();
+            
+            return !self.IsDead && !self.IsDisconnected && refs.pathfinder.CanSee(self.position(), from, 0.5f);
         }
     }
 }
