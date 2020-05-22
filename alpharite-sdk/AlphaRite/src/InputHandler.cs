@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AlphaRite {
     public class InputHandler {
-        private Queue<ManagedInput> _inputs;
+        private readonly Queue<ManagedInput> _inputs;
 
         public InputHandler() {
             _inputs = new Queue<ManagedInput>();
@@ -15,9 +15,15 @@ namespace AlphaRite {
             if (_inputs.Count == 0) return;
             var next = _inputs.First();
 
-            if (next.modifierCode != -1 && !next.modifierApplied) {
-                UnmanagedUtil.keyDown(next.modifierCode);
-                next.modifierApplied = true;
+            if (next.modifierKey != KeyCode.None && next.state == ModifierState.NotApplied) {
+                UnmanagedUtil.keyDown(VirtualKeys.mappedKeys[next.modifierKey]);
+                next.state = ModifierState.Applied;
+                return;
+            }
+
+            if (next.state == ModifierState.Applied) {
+                if (Input.GetKeyDown(next.modifierKey))
+                    next.state = ModifierState.UseCode;
                 return;
             }
 
@@ -26,30 +32,33 @@ namespace AlphaRite {
                     UnmanagedUtil.keyPressed(next.code);
                     break;
                 case ManagedInputType.MouseClick:
-                    UnmanagedUtil.mousePressed(next.code);
+                    UnmanagedUtil.mouseClick(next.code);
                     break;
                 case ManagedInputType.MouseWheel:
                     UnmanagedUtil.mouseWheelDown();
                     break;
             }
             
-            if (next.modifierApplied)
-                UnmanagedUtil.keyUp(next.modifierCode);
+            if (next.state == ModifierState.UseCode) {
+                if (Input.GetKeyUp(next.key) || Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetMouseButtonUp(next.code))
+                    next.state = ModifierState.StopApply;
+                return;
+            }
+
+            if (next.state == ModifierState.StopApply)
+                UnmanagedUtil.keyUp(VirtualKeys.mappedKeys[next.modifierKey]);
             _inputs.Dequeue();
         }
 
-        public void add(KeyCode code, KeyCode? modifier = null) {
+        public void press(KeyCode code, KeyCode modifier = KeyCode.None) {
             var isMouse = code.ToString().ToLower().Contains("mouse");
             var type = isMouse ? ManagedInputType.MouseClick : ManagedInputType.Keyboard;
-            var modifierCode = modifier != null ? VirtualKeys.mappedKeys[(KeyCode) modifier] : -1;
 
-            _inputs.Enqueue(new ManagedInput(type, VirtualKeys.mappedKeys[code], modifierCode));
+            _inputs.Enqueue(new ManagedInput(type, code, modifier));
         }
 
-        public void addMousewheel(KeyCode? modifier = null) {
-            var type = ManagedInputType.MouseWheel;
-            var modifierCode = modifier != null ? VirtualKeys.mappedKeys[(KeyCode) modifier] : -1;
-            _inputs.Enqueue(new ManagedInput(type, 0x0, modifierCode));
+        public void wheel(KeyCode modifier = KeyCode.None) {
+            _inputs.Enqueue(new ManagedInput(ManagedInputType.MouseWheel, 0x0, modifier));
         }
     }
 
@@ -58,18 +67,27 @@ namespace AlphaRite {
         MouseClick,
         MouseWheel
     }
-    
-    public struct ManagedInput {
-        public ManagedInputType type;
-        public int code;
-        public bool modifierApplied;
-        public int modifierCode;
 
-        public ManagedInput(ManagedInputType type, int code, int modifierCode = -1) {
+    public enum ModifierState {
+        NotApplied,
+        Applied,
+        UseCode,
+        StopApply
+    }
+    
+    public class ManagedInput {
+        public readonly ManagedInputType type;
+        public readonly int code;
+        public readonly KeyCode key;
+        public ModifierState state;
+        public readonly KeyCode modifierKey;
+
+        public ManagedInput(ManagedInputType type, KeyCode key, KeyCode modifierKey = KeyCode.None) {
             this.type = type;
-            this.code = code;
-            this.modifierCode = modifierCode;
-            this.modifierApplied = false;
+            this.key = key;
+            this.code = VirtualKeys.mappedKeys[key];
+            this.modifierKey = modifierKey;
+            this.state = ModifierState.NotApplied;
         }
     }
 }

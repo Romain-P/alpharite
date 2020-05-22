@@ -36,13 +36,6 @@ namespace AlphaRite.sdk.hacks {
         }
 
         private void aimbotActivated(bool hardLock, bool refreshPosition) {
-            var str = "";
-            for (var i = 0; i < sdk.refs.viewState.ActiveObjects.Count; i++) {
-                var type = sdk.refs.viewState.ActiveObjects.Values[i].TypeId;
-
-                str += sdk.refs.data.GetTypeName(type) + " - ";
-            }
-            Alpharite.println(str);
             if (!sdk.getSetting<bool>("aimbotKeepTarget") || refreshPosition || !_aimTargetCache.isValid()) {
                 var target = sdk.refs.players.nearestEnemyFromCursor;
 

@@ -332,6 +332,12 @@ namespace AlphaRite.sdk {
       mappedKeys[KeyCode.ScrollLock] = VK_SCROLL;
       mappedKeys[KeyCode.SysReq] = VK_SNAPSHOT;
       mappedKeys[KeyCode.UpArrow] = VK_UP;
+      mappedKeys[KeyCode.Mouse0] = 0;
+      mappedKeys[KeyCode.Mouse1] = 1;
+      mappedKeys[KeyCode.Mouse2] = 2;
+      mappedKeys[KeyCode.Mouse3] = 3;
+      mappedKeys[KeyCode.Mouse4] = 4;
+      mappedKeys[KeyCode.Mouse5] = 5;
     }
   }
 }

@@ -10,7 +10,11 @@ namespace AlphaRite.sdk {
             MOUSEEVENTF_WHEEL = 0x0800,
             MOUSEEVENTF_ABSOLUTE = 0x8000,
             MOUSEEVENTF_XDOWN = 0x0080,
-            MOUSEEVENTF_XUP = 0x0100
+            MOUSEEVENTF_XUP = 0x0100,
+            MOUSEEVENTF_LEFTDOWN = 0x0002,
+            MOUSEEVENTF_LEFTUP = 0x0004,
+            MOUSEEVENTF_RIGHTDOWN = 0x0008,
+            MOUSEEVENTF_RIGHTUP = 0x0010
         }
 
         [DllImport("user32.dll")]
@@ -43,13 +47,17 @@ namespace AlphaRite.sdk {
                 keybd_event(keyCode, 0x0, KEYEVENTF_KEYUP, 0x0);
         }
 
-        public static void mousePressed(int mouseCode) {
+        public static void mouseClick(int mouseCode) {
             var pos = Input.mousePosition;
             var x = (int)(pos.x / Screen.width * 65535f);
             var y = (int)(pos.y / Screen.height * 65535f);
+
+            const int absolute = (int) MouseEvent.MOUSEEVENTF_ABSOLUTE;
+            var buttonDown = mouseCode == 0 ? (int) MouseEvent.MOUSEEVENTF_LEFTDOWN : (int) MouseEvent.MOUSEEVENTF_RIGHTDOWN;
+            var buttonUp = mouseCode == 0 ? (int) MouseEvent.MOUSEEVENTF_LEFTUP : (int) MouseEvent.MOUSEEVENTF_RIGHTUP;
             
-            mouse_event((int) MouseEvent.MOUSEEVENTF_XDOWN, x, y, mouseCode, 0);
-            mouse_event((int) MouseEvent.MOUSEEVENTF_XUP, x, y, mouseCode, 0);
+            mouse_event(buttonDown | absolute, x, y, 0, 0);
+            mouse_event(buttonUp | absolute, x, y, 0, 0);
         }
 
         public static void mouseWheelDown() {
